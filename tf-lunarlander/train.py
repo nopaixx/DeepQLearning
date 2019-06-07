@@ -4,18 +4,21 @@ from utils import plotLearning
 import numpy as np
 from gym import wrappers
 import matplotlib.pyplot as plt
+import os
+
 
 if __name__ == '__main__':
-    env = gym.make('LunarLander-v2')
-#    env = gym.make('BattleZone-ram-v0')
+#    env = gym.make('LunarLander-v2')
+
+    env = gym.make('BattleZone-ram-v0')
     observation = env.reset()
     action = env.action_space.sample()
     print(observation)
     print(action)
     lr = 0.0001
     n_games = 500
-    agent = Agent(gamma=0.99, epsilon=1000.0, alpha=lr, input_dims=[8],
-                  n_actions=4, mem_size=1000000, n_games=n_games,
+    agent = Agent(gamma=0.99, epsilon=1, alpha=lr, input_dims=[128],
+                  n_actions=18, mem_size=1000000, n_games=n_games,
                   batch_size=64)
 
     #load_checkpoint = True
@@ -39,17 +42,18 @@ if __name__ == '__main__':
             print('episode: ', i,'score: ', score,
                  ' average score %.3f' % avg_score,
                 'epsilon %.3f' % agent.epsilon)
-            #agent.save_models()
+            agent.save_models()
         else:
             print('episode: ', i,'score: ', score)
 
         observation = env.reset()
+        observation = observation / 255
         score = 0
         while not done:
 #            env.render()
             action = agent.choose_action(observation)
             observation_, reward, done, info = env.step(action)
-
+            observation_ = observation_ / 255
             score += reward
             agent.store_transition(observation, action,
                                    reward, observation_, int(done))

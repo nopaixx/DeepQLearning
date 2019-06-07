@@ -52,7 +52,7 @@ class DeepQNetwork(object):
 
 class Agent(object):
     def __init__(self, alpha, gamma, mem_size, n_actions, epsilon, batch_size,
-                 n_games, input_dims=(210,160,4), epsilon_dec=0.996,
+                 n_games, input_dims=(210,160,4), epsilon_dec=0.99996,
                  epsilon_end=0.01, q_eval_dir='tmp/q_eval'):
         self.action_space = [i for i in range(n_actions)]
         self.n_actions = n_actions
