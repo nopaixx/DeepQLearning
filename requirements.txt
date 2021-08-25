@@ -1,4 +1,4 @@
-tensorflow-gpu==2.0.0-alpha0
+tensorflow-gpu==2.5.1
 matplotlib
 gym[box2d]
 box2d-py
